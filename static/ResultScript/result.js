@@ -977,11 +977,14 @@ class Mediator{
     // конструктор
     // инициализация полей класса
     constructor(){
+        // строка для хранения адреса сервера (для авторизации и регистрации)
         this.url = "http://localhost/MaximGameScripts/";
+        // объект, отвечающий за то, авторизован ли пользователь
         this.isAuthorized = {
             flag: false,
             login: ""
         };
+        // создание полей класса
         this.boxRender = new __WEBPACK_IMPORTED_MODULE_0__BoxRender_js__["a" /* default */]();
         this.elementFinder = new __WEBPACK_IMPORTED_MODULE_1__ElementFinder_js__["a" /* default */]();
         this.message = new __WEBPACK_IMPORTED_MODULE_2__ContentManager_js__["a" /* default */]();
@@ -994,6 +997,7 @@ class Mediator{
         this.gameWithComputerManager = new __WEBPACK_IMPORTED_MODULE_9__GameWithComputerManager_js__["a" /* default */](this.canvasManager,this.elementFinder, new __WEBPACK_IMPORTED_MODULE_2__ContentManager_js__["a" /* default */]());
     }
 
+    // метод для добавление тектовых полей в объект, отвечающий за их очистку
     addAllTextFields(){
         this.textFieldsCleaner.addTextField("authorization-box__login-field_black-shadow");
         this.textFieldsCleaner.addTextField("authorization-box__password-field_black-shadow");
@@ -1001,14 +1005,17 @@ class Mediator{
         this.textFieldsCleaner.addTextField("check-in-box__password-field_black-shadow");
     }
 
+    // метод для запуска игры против компьютера
     startOnePlayerGame(){
         this.gameWithComputerManager.startNewGame();
     }
 
+    // метод для вывода на экран содержимого игрового поля
     renderCanvasHolst(){
         this.canvasManager.renderMap();
     }
 
+    // метод для добавления всех страниц - боксов в объект, отвечающий за их скрытие и показ
     addAllBoxes(){
         this.boxRender.addBox("welcome-box");
         this.boxRender.addBox("authorization-box");
@@ -1017,31 +1024,38 @@ class Mediator{
         this.boxRender.addBox("game-with-computer-box");
     }
 
+    // определение страницы (бокса), на котором сейчас находится пользователь
     definePage(){
         this.router.moveToPage();
     }
 
+    // замена содержимого адресной строки и переход на соответствующий бокс
     changePathName(pathname){
         this.router.setPathName(pathname);
     }
 
+    // инициализация бокса, отвечающего за вывод сообщений на экран
     initMessageTextRender(){
         this.message.initElement(this.elementFinder.getElement("message-box__text-of-message_blue"));
         this.message.clear();
     }
 
+    // показать бокс с определённым классом
     showBoxElement(boxClass){
         this.boxRender.showBox(boxClass);
     }
 
+    // метод авторизации пользователя
     authorizeUser(){
         this.authorizationControl.authorize(this.url,this.router,this.isAuthorized);
     }
 
+    // метод регистрации пользователя
     checkInUser(){
         this.checkIn.registrate(this.url);
     }
 
+    // метод для добавления событий к кнопкам
     addListenersToButtons(){
         let mediatorThis = this;
 
@@ -1091,8 +1105,10 @@ class Mediator{
 
 }
 
+// создание экземпляра класса медиатор
 let mediator = new Mediator();
 
+// при загрузке страницы
 window.addEventListener("load", function(){
     mediator.addAllBoxes();
     mediator.addAllTextFields();
